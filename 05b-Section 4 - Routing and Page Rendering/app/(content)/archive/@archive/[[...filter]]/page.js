@@ -17,7 +17,7 @@ export default function FilteredNews({ params }) {
   const selectedYear = filter?.[0];
   const selectedMonth = filter?.[1];
 
-  if (filter.length > 2) {
+  if (filter?.length > 2) {
     throw new Error("Invalid filter");
   }
 
