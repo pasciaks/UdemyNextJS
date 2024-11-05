@@ -9,8 +9,10 @@ export function getLatestNews() {
 }
 
 export function getAvailableNewsYears() {
+  console.log("get available news years");
   return DUMMY_NEWS.reduce((years, news) => {
-    const year = new Date(news.date).getFullYear();
+    const year = new Date(news.date).getUTCFullYear();
+    console.log({ year, years });
     if (!years.includes(year)) {
       years.push(year);
     }
@@ -20,9 +22,9 @@ export function getAvailableNewsYears() {
 
 export function getAvailableNewsMonths(year) {
   return DUMMY_NEWS.reduce((months, news) => {
-    const newsYear = new Date(news.date).getFullYear();
+    const newsYear = new Date(news.date).getUTCFullYear();
     if (newsYear === +year) {
-      const month = new Date(news.date).getMonth();
+      const month = new Date(news.date).getUTCMonth();
       if (!months.includes(month)) {
         months.push(month + 1);
       }
@@ -33,14 +35,14 @@ export function getAvailableNewsMonths(year) {
 
 export function getNewsForYear(year) {
   return DUMMY_NEWS.filter(
-    (news) => new Date(news.date).getFullYear() === +year
+    (news) => new Date(news.date).getUTCFullYear() === +year
   );
 }
 
 export function getNewsForYearAndMonth(year, month) {
   return DUMMY_NEWS.filter((news) => {
-    const newsYear = new Date(news.date).getFullYear();
-    const newsMonth = new Date(news.date).getMonth() + 1;
+    const newsYear = new Date(news.date).getUTCFullYear();
+    const newsMonth = new Date(news.date).getUTCMonth() + 1;
     return newsYear === +year && newsMonth === +month;
   });
 }
