@@ -1,14 +1,14 @@
 import React from "react";
 
-import { DUMMY_NEWS } from "@/dummy-news";
+import { DUMMY_NEWS } from "@/dummy-news_old";
 import { notFound } from "next/navigation";
 
+import { getNewsItem } from "@/lib/news";
 // nested page in dynamic route
 
-export default function ImagePage({ params }) {
+export default async function ImagePage({ params }) {
   const newsSlug = params.slug;
-  const newsItem = DUMMY_NEWS.find((item) => item.slug === newsSlug);
-
+  const newsItem = await getNewsItem(newsSlug);
   if (!newsItem) {
     notFound();
   }
