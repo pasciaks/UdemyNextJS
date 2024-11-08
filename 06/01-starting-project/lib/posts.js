@@ -1,6 +1,6 @@
-import sql from 'better-sqlite3';
+import sql from "better-sqlite3";
 
-const db = new sql('posts.db');
+const db = new sql("posts.db");
 
 function initDb() {
   db.exec(`
@@ -30,7 +30,7 @@ function initDb() {
     )`);
 
   // Creating two dummy users if they don't exist already
-  const stmt = db.prepare('SELECT COUNT(*) AS count FROM users');
+  const stmt = db.prepare("SELECT COUNT(*) AS count FROM users");
 
   if (stmt.get().count === 0) {
     db.exec(`
@@ -47,11 +47,21 @@ function initDb() {
 
 initDb();
 
+export async function deletePosts() {
+  const stmt = db.prepare(`
+    DELETE 
+    FROM posts
+    WHERE id > 0`);
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return stmt.run();
+}
+
 export async function getPosts(maxNumber) {
-  let limitClause = '';
+  let limitClause = "";
 
   if (maxNumber) {
-    limitClause = 'LIMIT ?';
+    limitClause = "LIMIT ?";
   }
 
   const stmt = db.prepare(`
